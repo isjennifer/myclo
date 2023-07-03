@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import background_img from "../img/background_img.jpg"
 import Navbar from "../components/Navbar"
+import { useForm } from "react-hook-form"
 
 
 const Background = styled.div`
@@ -28,6 +29,13 @@ const LoginForm = styled.div`
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     
 `
+
+const ErrorMessage = styled.div`
+    font-size: 13px;
+    color: red;
+    padding: 10px 0px 20px 0px;
+`
+
 const SignUpPart = styled.div`
     display: flex;
     margin-top: 30px;
@@ -55,7 +63,7 @@ const Button = styled.button`
 const InputBox = styled.input`
     display: flex;
     width: 350px;
-    margin: 10px 0px 40px 0px;
+    margin: 10px 0px 0px 0px;
     padding: 10px 20px;
     border-radius: 40px;
     background-color: white;
@@ -63,19 +71,50 @@ const InputBox = styled.input`
 `
 
 function Login() {
+    const { register, handleSubmit, formState } = useForm();
+    const onValid = (data) => {
+        console.log(data);
+    }
+    const EmailErrorExist = formState.errors.email && formState.errors.email.message;
+    const PasswordErrorExist = formState.errors.password && formState.errors.password.message;
+
   return (
     <Background>
         <Navbar />
         <LoginForm>
             <span>MYCLO</span>
-            <form>
+            <form onSubmit={handleSubmit(onValid)}>
                 <div>
-                    <label for="id">EMAIL</label>
-                    <InputBox id="id" />
+                    <label for="email">EMAIL</label>
+                    <InputBox {...register(
+                        "email", 
+                        {required: "이메일을 입력하세요",
+                        pattern: {
+                            value: /^[A-Za-z0-9._%+-]+@[a-z]+\.[a-z]{2,3}/,
+                            message: "올바른 이메일 형식이 아닙니다",
+                            }
+                        }
+                        )} 
+                    id="email" placeholder="이메일을 입력하세요" style={{ borderColor: EmailErrorExist ? "red" : "" }}/>
+                    <ErrorMessage>{EmailErrorExist}</ErrorMessage>
                 </div>
                 <div>
                     <label for="password">PASSWORD</label>
-                    <InputBox id="password" />
+                    <InputBox {...register(
+                        "password", 
+                        {required: "비밀번호를 입력하세요",
+                        minLength: {
+                            value: 8,
+                            message: "8자 이상 입력하세요",
+                            },
+                        pattern:{
+                            value: /(?=.*[a-z])(?=.*[0-9])/,
+                            message: "최소 한개 이상의 소문자와 숫자를 포함해야합니다"
+                            }, 
+                        }
+                        )} 
+                    id="password" placeholder="비밀번호를 입력하세요"  style={{ borderColor: PasswordErrorExist ? "red" : "" }}/>
+                    <ErrorMessage>{PasswordErrorExist}</ErrorMessage>
                 </div>
                 <Button>LOGIN</Button>
             </form>
