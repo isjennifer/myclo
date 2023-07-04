@@ -7,6 +7,9 @@ const Nav = styled.section`
     height: 60px;
     //border: 2px solid black;
     color: white;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
 `
 const NavHome = styled.div`
     display: flex;

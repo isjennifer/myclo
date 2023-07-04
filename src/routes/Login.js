@@ -6,18 +6,21 @@ import { useForm } from "react-hook-form"
 
 
 const Background = styled.div`
+    position: relative;
     height: 100vh;
     background: url('${background_img}') no-repeat;
     background-size: cover;
+    z-index: 1;
 `
 
 const LoginForm = styled.div`
     display: flex;
     flex-direction: column;
+    position: relative;
+    top: 15%;
     width: 450px;
     height: 600px;
     padding: 30px;
-    margin-top: 50px;
     margin-inline: auto;
     justify-content: center;
     align-items: center;

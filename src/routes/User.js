@@ -10,13 +10,23 @@ const BackgroundImg = styled.div`
     background: url('${background_img}') no-repeat;
     background-size: cover;
     z-index: 1;
-`
 
+`
+const Circle = styled.div`
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 100%;
+    top: -100px;
+    left: 800px;
+    z-index: 2;
+
+`
 const Letter = styled.div`
     display: flex;
-    position: relative;
-    top: 30%;
     height: 250px;
+    margin-top: 200px;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
@@ -44,16 +54,22 @@ const Button = styled.button`
 
 function Home() {
   return (
+    <>
     <BackgroundImg>
+        <Circle />
         <Navbar />
-        <Letter>
-            <span>매일 아침 고민하지 마세요!</span>
-            <span>다양한 MYCLO 유저들에게 오늘의 룩 추천을 받아보세요.</span>
-            <Link to="/login">
-                <Button>CREATE MYCLO</Button>
-            </Link>
-        </Letter>
+        <div style={{display: "inline-flex"}}>
+            <Letter>
+                <span>오늘은 어떤 옷을 입어볼까요?</span>
+                    <Button>내 옷장에서 옷 고르기</Button>
+                    <Button>사람들에게 추천받기</Button>
+            </Letter>
+            
+        </div>
+        
     </BackgroundImg>
+
+    </>
   );
 }
 

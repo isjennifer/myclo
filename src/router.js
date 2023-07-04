@@ -2,6 +2,8 @@ import Home from "./routes/Home"
 import MyCloset from "./routes/MyCloset"
 import Login from "./routes/Login"
 import SignUp from "./routes/SignUp"
+import User from "./routes/User"
+
 
 export const RouterInfo = [
     {
@@ -23,6 +25,11 @@ export const RouterInfo = [
         path: "/signup",
         element: <SignUp/>,
         label: 'signup',
+    },
+    {
+        path: "/user",
+        element: <User/>,
+        label: 'user',
     },
 ]
 
