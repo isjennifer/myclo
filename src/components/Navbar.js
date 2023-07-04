@@ -45,7 +45,7 @@ function navbar() {
                 <Link to="/">MYCLO</Link>
             </NavHome>
             <NavMenu>
-                <Link to="/MyCloset">MY CLOSET</Link>
+                <Link to="/mycloset">MY CLOSET</Link>
                 <span>COLLECTION</span>
                 <span>COMMUNITY</span>
                 <span>FAQ</span>

@@ -15,9 +15,9 @@ const LoginForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 450px;
-    height: 600px;
+    height: 700px;
     padding: 30px;
-    margin-top: 50px;
+    margin-top: 10px;
     margin-inline: auto;
     justify-content: center;
     align-items: center;
@@ -33,7 +33,7 @@ const LoginForm = styled.div`
 const ErrorMessage = styled.div`
     font-size: 13px;
     color: red;
-    padding: 10px 0px 20px 0px;
+    padding: 5px 0px 10px 0px;
 `
 
 const SignUpPart = styled.div`
@@ -79,26 +79,39 @@ const SmallButton = styled(Button)`
 const InputBox = styled.input`
     display: flex;
     width: 350px;
-    margin: 10px 0px 0px 0px;
+    margin: 5px 0px 5px 0px;
     padding: 10px 20px;
     border-radius: 40px;
     background-color: white;
     border: 1px solid #7B7B7B;
 `
 
-function Login() {
-    const { register, handleSubmit, formState } = useForm();
+function SignUp() {
+    const { register, handleSubmit, formState, watch } = useForm();
+    let currentPassword = watch("password","");
     const onValid = (data) => {
-        console.log(data);
-    }
+        console.log(data)
+    };
+    const UsernameErrorExist = formState.errors.username && formState.errors.username.message;
     const EmailErrorExist = formState.errors.email && formState.errors.email.message;
     const PasswordErrorExist = formState.errors.password && formState.errors.password.message;
+    const CheckErrorExist = formState.errors.check && formState.errors.check.message;
 
   return (
     <Background>
         <Navbar />
         <LoginForm>
             <form onSubmit={handleSubmit(onValid)}>
+                <div>
+                    <label for="username">USERNAME</label>
+                    <InputBox {...register(
+                        "username", 
+                        {required: "이름을 입력하세요"
+                        }
+                        )} 
+                    id="username" placeholder="이름을 입력하세요" style={{ borderColor: UsernameErrorExist ? "red" : "" }}/>
+                    <ErrorMessage>{UsernameErrorExist}</ErrorMessage>
+                </div>
                 <div>
                     <label for="email">EMAIL</label>
                     <InputBox {...register(
@@ -131,12 +144,23 @@ function Login() {
                     id="password" placeholder="비밀번호를 입력하세요"  style={{ borderColor: PasswordErrorExist ? "red" : "" }}/>
                     <ErrorMessage>{PasswordErrorExist}</ErrorMessage>
                 </div>
-                <Button>LOGIN</Button>
+                <div>
+                    <label for="check">CHECK PASSWORD</label>
+                    <InputBox {...register(
+                        "check", 
+                        {required: "비밀번호를 한번 더 입력하세요",
+                        validate: value => value === currentPassword ? "" : "비밀번호가 다릅니다"
+                        }
+                        )}
+                    id="check" placeholder="비밀번호를 한번 더 입력하세요" style={{ borderColor: CheckErrorExist ? "red" : "" }}/>
+                    <ErrorMessage>{CheckErrorExist}</ErrorMessage>
+                </div>
+                <Button>SIGN UP</Button>
             </form>
             <SignUpPart>
-                <span>MYCLO가 처음이신가요?</span>
-                <Link to="/signup">
-                    <SmallButton>SIGN UP</SmallButton>
+                <span>MYCLO를 이용해보셨나요?</span>
+                <Link to="/login">
+                    <SmallButton>LOGIN</SmallButton>
                 </Link>
             </SignUpPart>
         </LoginForm>
@@ -144,4 +168,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;
